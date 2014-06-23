@@ -42,10 +42,19 @@ shinyServer(function(input, output) {
                 colnames(tempData) <- c("Attribute", "mpg")
                 tempData <- data.frame(tempData)
                 
+                xLabelPos <- (min(tempData$Attribute) + max(tempData$Attribute))/2
+                yLabelPos <- max(tempData$mpg)
+                
+                # Linear fit model
+                linearFit <- lm(mpg ~ Attribute, data = tempData)
+                lModel <- paste("Intercept: ", toString(linearFit[[1]][1]), "  ",
+                                "Slope: ", toString(linearFit[[1]][2]))
+                
                 # Plot with ggplot2 library
                 p <- ggplot(tempData, aes(Attribute, mpg))
                 p <- p + geom_point(size = pSize, colour = pColor, alpha = pAlpha) + geom_smooth(
                         method = "lm", se=FALSE, color=lColor, size = lWidth) 
-                p + xlab(attList[input$att]) + ylab("Miles per Gallon")
+                p <- p + xlab(attList[input$att]) + ylab("Miles per Gallon")
+                p + annotate("text", x = xLabelPos, y = yLabelPos, label = lModel)
         })
 })

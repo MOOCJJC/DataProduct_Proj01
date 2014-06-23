@@ -50,7 +50,9 @@ shinyUI(fluidPage(
                 mainPanel(
                         h3(textOutput("caption")),
                         
-                        plotOutput("mpgPlot")
+                        plotOutput("mpgPlot")#,
+                        
+                        #h4(textOutput("lModel"))
                 )
         ),
         
